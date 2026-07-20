@@ -1,54 +1,67 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
-import { HOME } from "@/constants/testIds";
+import Lenis from "lenis";
+import { AnimatePresence } from "framer-motion";
+import { Toaster } from "sonner";
+import { Preloader } from "@/components/site/Preloader";
+import { CustomCursor } from "@/components/site/CustomCursor";
+import { Navbar } from "@/components/site/Navbar";
+import { Hero } from "@/components/site/Hero";
+import { About } from "@/components/site/About";
+import { Features } from "@/components/site/Features";
+import { HowItWorks } from "@/components/site/HowItWorks";
+import { TechStack } from "@/components/site/TechStack";
+import { Contact } from "@/components/site/Contact";
+import { Footer } from "@/components/site/Footer";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
-
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
+function App() {
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    helloWorldApi();
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) {
+      setLoading(false);
+      return;
+    }
+    const lenis = new Lenis({ lerp: 0.09, smoothWheel: true });
+    window.__lenis = lenis;
+    let raf;
+    const loop = (t) => {
+      lenis.raf(t);
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+
+    lenis.stop();
+    const timer = setTimeout(() => {
+      setLoading(false);
+      lenis.start();
+    }, 2300);
+
+    return () => {
+      clearTimeout(timer);
+      cancelAnimationFrame(raf);
+      lenis.destroy();
+      window.__lenis = null;
+    };
   }, []);
 
   return (
-    <div>
-      <header className="App-header">
-        <a
-          data-testid={HOME.emergentLink}
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
-};
-
-function App() {
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+    <div className="App relative">
+      <div className="noise-overlay" />
+      <CustomCursor />
+      <Toaster position="bottom-right" theme="dark" toastOptions={{ style: { background: "#060a14", border: "1px solid rgba(37,150,190,0.35)", color: "#f8fafc" } }} />
+      <AnimatePresence mode="wait">{loading && <Preloader key="preloader" />}</AnimatePresence>
+      <Navbar />
+      <main>
+        <Hero started={!loading} />
+        <About />
+        <Features />
+        <HowItWorks />
+        <TechStack />
+        <Contact />
+      </main>
+      <Footer />
     </div>
   );
 }
