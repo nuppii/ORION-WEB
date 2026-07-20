@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Magnetic } from "./Magnetic";
-import { NAV_LINKS } from "./content";
+import { useContent, useLang } from "./i18n";
 
 export const scrollToId = (id) => {
   const el = document.getElementById(id);
@@ -11,7 +11,29 @@ export const scrollToId = (id) => {
   else el.scrollIntoView({ behavior: "smooth" });
 };
 
+const LangToggle = ({ className = "" }) => {
+  const { lang, setLang } = useLang();
+  return (
+    <div className={`flex items-center border border-white/[0.12] ${className}`} data-testid="lang-toggle">
+      {["en", "fr"].map((l) => (
+        <button
+          key={l}
+          data-testid={`lang-${l}`}
+          onClick={() => setLang(l)}
+          className={`font-mono-orion text-[10px] tracking-[0.2em] uppercase px-3 py-2 transition-colors duration-300 ${
+            lang === l ? "bg-[rgba(37,150,190,0.2)] text-[#48cae4]" : "text-[#94A3B8]/60 hover:text-white"
+          }`}
+          data-hover
+        >
+          {l}
+        </button>
+      ))}
+    </div>
+  );
+};
+
 export const Navbar = () => {
+  const { NAV_LINKS } = useContent();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { scrollYProgress } = useScroll();
@@ -44,7 +66,7 @@ export const Navbar = () => {
           scrolled ? "backdrop-blur-xl bg-[#020308]/70 border-b border-white/[0.06]" : "bg-transparent"
         }`}
       >
-        <motion.div className="absolute bottom-0 left-0 right-0 h-[2px] origin-left" style={{ scaleX: progress, background: "linear-gradient(90deg, #2596be, #48cae4)" }} />
+        <motion.div className="absolute bottom-0 left-0 right-0 h-[2px] origin-left" style={{ scaleX: progress, background: "linear-gradient(90deg, #2596be, #48cae4)", boxShadow: "0 0 10px rgba(72,202,228,0.6)" }} />
         <nav className="flex items-center justify-between px-6 sm:px-12 h-[70px]">
           <button
             data-testid="nav-logo"
@@ -56,13 +78,13 @@ export const Navbar = () => {
             ORION
           </button>
 
-          <div className="hidden xl:flex items-center gap-7">
+          <div className="hidden xl:flex items-center gap-6">
             {NAV_LINKS.map((l) => (
               <button
                 key={l.id}
                 data-testid={`nav-link-${l.id}`}
                 onClick={() => go(l.id)}
-                className="font-mono-orion text-[10px] tracking-[0.18em] uppercase text-[#94A3B8] hover:text-white transition-colors duration-300"
+                className="font-mono-orion text-[10px] tracking-[0.16em] uppercase text-[#94A3B8] hover:text-white transition-colors duration-300"
                 data-hover
               >
                 {l.label}
@@ -70,12 +92,13 @@ export const Navbar = () => {
             ))}
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            <LangToggle className="hidden sm:flex" />
             <Magnetic strength={0.25}>
               <button
                 data-testid="nav-cta-btn"
                 onClick={() => go("about")}
-                className="hidden sm:inline-flex font-mono-orion text-[11px] tracking-[0.2em] uppercase px-5 py-2.5 border border-[rgba(37,150,190,0.5)] text-[#48cae4] hover:bg-[rgba(37,150,190,0.12)] transition-colors duration-300"
+                className="hidden md:inline-flex font-mono-orion text-[11px] tracking-[0.2em] uppercase px-5 py-2.5 border border-[rgba(37,150,190,0.5)] text-[#48cae4] hover:bg-[rgba(37,150,190,0.12)] hover:shadow-[0_0_24px_rgba(37,150,190,0.35)] transition-all duration-300 tron-cut"
               >
                 Discover ORION
               </button>
@@ -112,7 +135,7 @@ export const Navbar = () => {
                     exit={{ y: "110%" }}
                     transition={{ duration: 0.6, delay: 0.05 + i * 0.05, ease: [0.22, 1, 0.36, 1] }}
                     onClick={() => go(l.id)}
-                    className="block text-left font-heading font-bold text-4xl sm:text-5xl py-1.5 text-white/80 hover:text-[#48cae4] transition-colors duration-300"
+                    className="block text-left font-heading font-bold text-3xl sm:text-5xl py-1.5 text-white/80 hover:text-[#48cae4] transition-colors duration-300"
                     data-hover
                   >
                     <span className="font-mono-orion text-xs text-[#48cae4]/60 mr-4 align-middle">{String(i + 1).padStart(2, "0")}</span>
@@ -120,16 +143,18 @@ export const Navbar = () => {
                   </motion.button>
                 </div>
               ))}
-              <motion.button
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
                 transition={{ delay: 0.55 }}
-                onClick={() => go("about")}
-                className="btn-primary-orion mt-10"
+                className="mt-8 flex items-center gap-4"
               >
-                Discover ORION
-              </motion.button>
+                <button onClick={() => go("about")} className="btn-primary-orion">
+                  Discover ORION
+                </button>
+                <LangToggle />
+              </motion.div>
             </div>
           </motion.div>
         )}

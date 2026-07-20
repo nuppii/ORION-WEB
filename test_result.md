@@ -186,3 +186,89 @@ test_plan:
 agent_communication:
   - agent: "main"
     message: "Frontend-only rewrite complete. No backend changes (backend untouched, no backend testing needed). Visual verification done via screenshots at multiple scroll positions. Awaiting user permission for automated frontend testing."
+
+## Update 2 (enhancement batch)
+frontend:
+  - task: "EN/FR language toggle (i18n context, full FR translation)"
+    implemented: true
+    working: true
+    file: "frontend/src/components/site/i18n.jsx, content.fr.js, Navbar.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "LangProvider + useContent hook, persisted in localStorage. Toggle in navbar (data-testid lang-toggle / lang-en / lang-fr) and in mobile menu. All 17 site components consume content via hook."
+      - working: true
+        agent: "testing"
+        comment: "Tested EN/FR toggle. Switches correctly between English and French (e.g., 'Capabilities' → 'Capacités'). Persists in localStorage as 'orion-lang'. Reload maintains language selection. Toggle visible in both desktop navbar and mobile menu. All content updates correctly."
+  - task: "TRON-style Capabilities redesign (tile grid + detail console)"
+    implemented: true
+    working: true
+    file: "frontend/src/components/site/Capabilities.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "9 tiles (capability-tile-0..8, click/hover select) + console panel (capability-console, capability-detail) with scanlines and corner accents."
+      - working: true
+        agent: "testing"
+        comment: "Tested capability tiles and console. Clicking tiles (e.g., tile-3, tile-7) correctly updates console content. Console panel visible with TRON styling. Content changes verified between different tiles. Hover and click interactions work smoothly."
+  - task: "Cosmic background (stardust + shooting stars canvas)"
+    implemented: true
+    working: true
+    file: "frontend/src/components/site/CosmicBackground.jsx"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Fixed 2D canvas z-0 (data-testid cosmic-background), main content above."
+      - working: true
+        agent: "testing"
+        comment: "Cosmic background canvas verified. Element exists with data-testid='cosmic-background', is a canvas element, and renders correctly behind all content."
+  - task: "Follow the Project button opens GitHub"
+    implemented: true
+    working: true
+    file: "frontend/src/components/site/BlackHoleSection.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "cta-follow-btn opens https://github.com/nuppii/ORION-WEB in new tab."
+      - working: true
+        agent: "testing"
+        comment: "Tested cta-follow-btn. Opens https://github.com/nuppii/ORION-WEB in new tab correctly. cta-architecture-btn also works, scrolling back to architecture section."
+  - task: "Shorter pinned sections (galaxy 300vh, solar 300vh, black hole 280vh) + reduced paddings"
+    implemented: true
+    working: true
+    file: "GalaxySection.jsx, SolarSection.jsx, BlackHoleSection.jsx, all sections"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Shorter pinned sections implemented."
+      - working: true
+        agent: "testing"
+        comment: "Verified pinned sections: Galaxy (300vh), Solar (300vh), Black Hole (280vh). All sections render correctly with proper scroll-triggered HUD phase changes. Galaxy shows intro → layer cards, Solar shows intro → service cards, Black Hole shows intro → lines → reveal. All 3D canvases render correctly."
+
+test_plan:
+  current_focus:
+    - "All current focus items tested and verified"
+  stuck_tasks: []
+  test_all: false
+  test_priority: "high_first"
+
+agent_communication:
+  - agent: "main"
+    message: "Frontend-only. No backend. Preloader ~2.3s at load. Lenis smooth scroll active; programmatic window.scrollTo works. Pinned 3D sections need incremental scrolling to observe HUD phase changes."
+  - agent: "testing"
+    message: "Comprehensive testing complete. All 12 test items from review request verified: ✅ Page load with preloader, ✅ Navbar anchors, ✅ EN/FR toggle with persistence, ✅ Capabilities TRON console, ✅ Galaxy section (architecture layers), ✅ Solar section (connected services), ✅ Black hole section (CTA phases + GitHub link), ✅ FAQ accordion, ✅ Footer with copyright, ✅ Cosmic background canvas, ✅ Mobile menu with language toggle, ✅ No critical console errors. All features working correctly. No issues found."

@@ -2,13 +2,14 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus } from "lucide-react";
 import { FadeUp } from "./SplitReveal";
-import { FAQ } from "./content";
+import { useContent } from "./i18n";
 
 export const FAQSection = () => {
+  const { FAQ } = useContent();
   const [open, setOpen] = useState(0);
 
   return (
-    <section id="faq" data-testid="faq-section" className="relative py-32 sm:py-44 px-6 sm:px-12 overflow-hidden">
+    <section id="faq" data-testid="faq-section" className="relative py-24 sm:py-32 px-6 sm:px-12 overflow-hidden">
       <div className="aura" style={{ width: 500, height: 500, background: "rgba(37,150,190,0.06)", bottom: "10%", right: "-12%" }} />
       <div className="max-w-4xl mx-auto">
         <FadeUp>
@@ -17,7 +18,7 @@ export const FAQSection = () => {
           </p>
         </FadeUp>
         <FadeUp delay={0.1}>
-          <h2 data-testid="faq-title" className="font-heading font-bold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.02] text-white mb-20">
+          <h2 data-testid="faq-title" className="font-heading font-bold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.02] text-white mb-16">
             {FAQ.title}
           </h2>
         </FadeUp>

@@ -1,5 +1,16 @@
 // ORION site content — single source of truth
 
+export const GITHUB_URL = "https://github.com/nuppii/ORION-WEB";
+
+export const UI = {
+  scrollExplore: "Scroll to explore",
+  keepScrollArch: "Keep scrolling to traverse the network \u2193",
+  keepScrollSolar: "Keep scrolling to visit each environment \u2193",
+  corePrinciples: "Core Principles",
+  diagnostics: "orion \u2014 system diagnostics",
+  live: "live",
+};
+
 export const NAV_LINKS = [
   { label: "Home", id: "hero" },
   { label: "About", id: "about" },
@@ -31,7 +42,7 @@ export const VISION = {
   p1: "Most AI assistants stop after generating an answer. ORION explores what comes next: an intelligent operational layer capable of turning a request into an actionable plan.",
   p2: "The long-term vision is to create a system that can understand a goal, identify the right capabilities, coordinate multiple operations, interact with local and connected tools, recover from selected failures, and clearly communicate the final result.",
   ideaLead: "ORION is designed around one central idea:",
-  quote: "Intelligence becomes truly useful when it can transform intent into dependable action.",
+  quoteParts: ["\u201cIntelligence becomes truly useful when it can transform ", "intent", " into dependable ", "action", ".\u201d"],
   p3: "The project aims to bridge the gap between conversational AI and practical digital execution while keeping control, transparency, and user awareness at the center of every workflow.",
 };
 
@@ -143,15 +154,15 @@ export const ARCHITECTURE = {
   title: "A modular operating network",
   intro: "ORION is organized as a collection of interacting layers rather than a single artificial intelligence model.",
   layers: [
-    { name: "Interface Layer", text: "Manages the desktop experience, voice input, text interaction, system feedback, settings, and integrated application panels." },
-    { name: "Intelligence Layer", text: "Uses AI models to understand language, interpret goals, generate responses, select tools, and assist with planning." },
-    { name: "Planning Layer", text: "Transforms complex objectives into structured sequences of executable actions." },
-    { name: "Agent Layer", text: "Adds domain-oriented context and routes requests toward specialized profiles." },
-    { name: "Execution Layer", text: "Invokes local tools and connected services using structured parameters." },
-    { name: "Memory Layer", text: "Maintains local long-term context and connected knowledge." },
-    { name: "Integration Layer", text: "Connects ORION with selected third-party platforms and APIs." },
-    { name: "Security Layer", text: "Applies operational policies and aims to identify sensitive or potentially destructive actions." },
-    { name: "Recovery Layer", text: "Analyzes execution failures and supports retries or re-planning." },
+    { short: "Interface", nameMain: "Interface", nameAccent: " Layer", text: "Manages the desktop experience, voice input, text interaction, system feedback, settings, and integrated application panels." },
+    { short: "Intelligence", nameMain: "Intelligence", nameAccent: " Layer", text: "Uses AI models to understand language, interpret goals, generate responses, select tools, and assist with planning." },
+    { short: "Planning", nameMain: "Planning", nameAccent: " Layer", text: "Transforms complex objectives into structured sequences of executable actions." },
+    { short: "Agent", nameMain: "Agent", nameAccent: " Layer", text: "Adds domain-oriented context and routes requests toward specialized profiles." },
+    { short: "Execution", nameMain: "Execution", nameAccent: " Layer", text: "Invokes local tools and connected services using structured parameters." },
+    { short: "Memory", nameMain: "Memory", nameAccent: " Layer", text: "Maintains local long-term context and connected knowledge." },
+    { short: "Integration", nameMain: "Integration", nameAccent: " Layer", text: "Connects ORION with selected third-party platforms and APIs." },
+    { short: "Security", nameMain: "Security", nameAccent: " Layer", text: "Applies operational policies and aims to identify sensitive or potentially destructive actions." },
+    { short: "Recovery", nameMain: "Recovery", nameAccent: " Layer", text: "Analyzes execution failures and supports retries or re-planning." },
   ],
 };
 
@@ -334,6 +345,7 @@ export const FINAL_CTA = {
   intro: "The next generation of personal AI is not only conversational.",
   lines: ["It understands context.", "It coordinates capabilities.", "It interacts with real tools.", "It transforms intent into action."],
   reveal: "This is ORION.",
+  horizon: "Beyond the event horizon",
   subtitle: "Obviously Rochat's Intelligent Operating Network",
   actions: [
     { label: "Follow the Project", target: "status", primary: true },
