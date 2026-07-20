@@ -42,7 +42,9 @@ jobs:
 
       - name: Install frontend dependencies
         working-directory: frontend
-        run: npm install --legacy-peer-deps
+        run: |
+          npm install --legacy-peer-deps
+          npm install --legacy-peer-deps --no-save ajv@8.17.1 ajv-keywords@5.1.0
 
       - name: Build WEB-TEST frontend
         working-directory: frontend
