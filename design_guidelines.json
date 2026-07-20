@@ -1,0 +1,114 @@
+{
+  "theme": "dark",
+  "colors": {
+    "background_base": "#020308",
+    "background_surface": "#060A14",
+    "primary_orion_blue": "#2596be",
+    "accent_cyan": "#48cae4",
+    "text_primary": "#F8FAFC",
+    "text_secondary": "#94A3B8",
+    "border_subtle": "rgba(255, 255, 255, 0.08)",
+    "glow_primary": "rgba(37, 150, 190, 0.4)"
+  },
+  "typography": {
+    "heading_font": "Cabinet Grotesk",
+    "body_font": "Satoshi",
+    "mono_font": "JetBrains Mono",
+    "scale": {
+      "h1": "text-5xl sm:text-7xl lg:text-[7vw] tracking-tighter leading-[0.9]",
+      "h2": "text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-none",
+      "h3": "text-2xl sm:text-3xl lg:text-4xl tracking-tight",
+      "body_lg": "text-lg sm:text-xl leading-relaxed text-text_secondary",
+      "body": "text-base leading-relaxed text-text_secondary",
+      "mono_label": "text-xs sm:text-sm font-mono tracking-[0.2em] uppercase"
+    },
+    "rules": [
+      "Use extremely tight letter spacing for headings.",
+      "Never center-align large blocks of text; stick to left-alignment for strong editorial structure.",
+      "Use mono font for overlines, tags, and tech specs."
+    ]
+  },
+  "visual_enhancers": {
+    "noise_texture": "A fixed overlay with a subtle black and white noise texture (mix-blend-overlay or opacity 3-5%) to kill the 'digital flatness'.",
+    "custom_cursor": "A custom circular cursor that follows the mouse, blending with the background (mix-blend-difference) or glowing subtly when hovering over interactable elements.",
+    "glassmorphism": "Use sparingly. For the sticky header or floating cards, use backdrop-blur-xl with a 1px solid border-border_subtle and a very faint white background (bg-white/5).",
+    "glow": "Use radial gradients in the background to create 'auras' behind key elements like the 3D sphere or CTA buttons. Use the primary ORION blue."
+  },
+  "layouts_and_sections": {
+    "global": "Wrap the entire site in a Lenis smooth scroll provider. Set background to background_base.",
+    "preloader": "An animated full-screen preloader that reveals the ORION logo or text sequentially before fading out and allowing the Hero animation to start.",
+    "hero": {
+      "layout": "100vh height. Kinetic layout.",
+      "content": "Eyebrow ('Proactive AI Operating Network'), massive 'ORION' title (masked line-by-line reveal), subtitle. Two magnetic buttons.",
+      "3d_element": "React Three Fiber particle sphere or network on the right side or background, reacting to mouse position (rotation/parallax)."
+    },
+    "about": {
+      "layout": "High negative space. Generous padding (py-32).",
+      "interaction": "Scroll storytelling. Large text reveals letter-by-letter or word-by-word on scroll. Pin & reveal effect for the domains (Automation, System Interaction, etc.)."
+    },
+    "features": {
+      "layout": "Numbered manifesto chapters. 01 to 05.",
+      "design": "Massive typography for the numbers (e.g., text-8xl text-border_subtle). Clean bento-style or full-width rows with high contrast."
+    },
+    "how_it_works": {
+      "layout": "Horizontal scroll section OR sticky pinned vertical scroll revealing steps one by one.",
+      "steps": "User Input \u2192 AI Analysis \u2192 Tool Selection \u2192 Execution \u2192 Feedback."
+    },
+    "tech_stack": {
+      "layout": "Slow editorial marquee for the tech stack items.",
+      "design": "Large outline text or prominent typography sliding infinitely across the screen."
+    },
+    "contact": {
+      "layout": "Deep dark brutalist or glassmorphic form for lead capture.",
+      "interaction": "Form inputs must have focus glows and micro-interactions."
+    }
+  },
+  "motion_and_interactions": {
+    "scroll": "Lenis for smooth momentum scrolling.",
+    "reveal": "Framer Motion for scroll-reveals (fade up, line-by-line mask reveals).",
+    "hover": "Magnetic buttons (the button slightly moves towards the cursor on hover), hover glows.",
+    "accessibility": "Always respect prefers-reduced-motion. Disable 3D reactivity and complex Framer Motion transitions if true."
+  },
+  "3d_libraries": {
+    "library": "@react-three/fiber and @react-three/drei",
+    "usage": "Create a signature 3D particle brain/sphere in the Hero. Use points/particles, apply a custom shader or simple math for undulating motion, and use useFrame to rotate it slightly based on state.mouse."
+  },
+  "image_urls": {
+    "texture_overlay": {
+      "url": "https://images.pexels.com/photos/18599094/pexels-photo-18599094.jpeg",
+      "description": "Grainy black and white abstract texture for the fixed background noise overlay."
+    },
+    "abstract_particles_fallback": {
+      "url": "https://images.pexels.com/photos/9665216/pexels-photo-9665216.jpeg",
+      "description": "Abstract dust particles, useful as a fallback image if WebGL fails or for meta tags."
+    }
+  },
+  "components_and_tech": {
+    "forms": "Use raw HTML/Tailwind for the structure to maintain the highly custom cinematic look, or heavily stripped-down Shadcn components.",
+    "animations": "framer-motion, @studio-freight/react-lenis (or lenis)",
+    "3d": "three, @react-three/fiber, @react-three/drei",
+    "icons": "lucide-react for minimal UI icons."
+  },
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "You tend to converge toward generic, 'on distribution' outputs. Make creative, distinctive frontends that surprise and delight.",
+    "Avoid generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy and WebGL.",
+    "Use glass-morphism effects carefully with backdrop-blur.",
+    "You MUST NOT apply universal transition (e.g., transition: all). Add transitions for specific interactive elements only.",
+    "You MUST NOT center align the app container, i.e., do not add .App { text-align: center; } in the css file.",
+    "Every interaction needs micro-animations - hover states, transitions, parallax effects, and entrance animations.",
+    "Use 2-3x more spacing than feels comfortable. Cramped designs look cheap.",
+    "Subtle grain textures, custom cursors, selection states, and loading animations separate good from extraordinary.",
+    "All interactive and key informational elements MUST include a data-testid attribute.",
+    "NEVER use generic placeholder images or AI assistant Emojis.",
+    "Write .js and .jsx files, not .tsx.",
+    "DO NOT use complete transparent background in header or overlays that have content under it. Use dark semi-transparent with backdrop-blur."
+  ],
+  "instructions_to_main_agent": [
+    "Ensure the preloader is fully functional before revealing the hero.",
+    "Implement the React Three Fiber particle sphere prominently in the hero section. Use Points and PointsMaterial or a custom shader.",
+    "Implement the lead capture form so it's ready to be hooked up to a MongoDB backend (create an API route in FastAPI).",
+    "Follow the exact site content provided. Do not invent new copy.",
+    "Ensure horizontal scroll for 'How It Works' works smoothly via Framer Motion useScroll and useTransform."
+  ]
+}

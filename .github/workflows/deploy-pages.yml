@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - WEB-TEST
   workflow_dispatch:
 
 permissions:
@@ -25,10 +24,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out WEB-TEST website
+      - name: Check out website
         uses: actions/checkout@v6
-        with:
-          ref: WEB-TEST
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
@@ -46,7 +43,7 @@ jobs:
           npm install --legacy-peer-deps
           npm install --legacy-peer-deps --no-save ajv@8.17.1 ajv-keywords@5.1.0
 
-      - name: Build WEB-TEST frontend
+      - name: Build ORION frontend
         working-directory: frontend
         env:
           CI: "false"

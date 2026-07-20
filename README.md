@@ -23,7 +23,7 @@ This repository contains the public promotional website for **ORION — Obviousl
 
 It is deliberately separated from the private ORION application repository. Only the static website and its deployment configuration are published here; the Python application, private configuration, credentials, personal data and internal runtime files are not part of this repository.
 
-The website is built with plain HTML, CSS and JavaScript. It requires no framework, package installation, server-side runtime or build dependency.
+The website is built as a React single-page application with a component-based architecture, responsive styling, motion design and WebGL-powered visual scenes. GitHub Actions compiles the public production bundle automatically.
 
 ## About ORION
 
@@ -50,10 +50,11 @@ Some capabilities remain experimental, platform-dependent or subject to change. 
 
 | Layer | Technology |
 |---|---|
-| Structure | Semantic HTML5 |
-| Design | Responsive CSS3 |
-| Interaction | Vanilla JavaScript |
-| Visual effects | Canvas API and CSS gradients |
+| Application | React 19 |
+| Build system | Create React App and CRACO |
+| Design | Tailwind CSS and custom responsive CSS |
+| Motion | Framer Motion and Lenis |
+| Visual effects | Three.js and React Three Fiber |
 | Hosting | GitHub Pages |
 | Deployment | GitHub Actions |
 
@@ -66,19 +67,21 @@ git clone https://github.com/nuppii/ORION-WEB.git
 cd ORION-WEB
 ```
 
-Start a local static server:
+Install the frontend dependencies and start the development server:
 
 ```powershell
-python -m http.server 8000
+cd frontend
+npm install --legacy-peer-deps
+npm start
 ```
 
 Then open:
 
 ```text
-http://127.0.0.1:8000/
+http://localhost:3000/
 ```
 
-Opening `index.html` directly also works, but a local HTTP server more closely matches the GitHub Pages environment.
+The development server supports live reloading while editing the React components.
 
 ## Repository structure
 
@@ -87,23 +90,18 @@ ORION-WEB/
 ├── .github/
 │   └── workflows/
 │       └── deploy-pages.yml   # Automatic GitHub Pages deployment
-├── .nojekyll                  # Disables unnecessary Jekyll processing
-├── app.js                     # Network animation and scroll effects
-├── index.html                 # Website content and semantic structure
-├── styles.css                 # Visual identity and responsive layout
+├── frontend/
+│   ├── public/                # HTML shell and public metadata
+│   ├── src/                   # React application and site sections
+│   ├── package.json           # Dependencies and scripts
+│   └── craco.config.js        # Build configuration
+├── design_guidelines.json     # Visual design reference
 └── README.md                  # Repository documentation
 ```
 
 ## Deployment
 
-The workflow in `.github/workflows/deploy-pages.yml` runs automatically whenever a commit is pushed to `main`. It creates a deployment artifact containing only:
-
-- `index.html`
-- `styles.css`
-- `app.js`
-- `.nojekyll`
-
-This explicit allowlist prevents repository documentation and workflow configuration from becoming part of the deployed website artifact.
+The workflow in `.github/workflows/deploy-pages.yml` runs automatically whenever a commit is pushed to `main`. It installs the frontend dependencies, compiles an optimized React production build and deploys only `frontend/build` to GitHub Pages.
 
 To enable the first deployment:
 
@@ -117,10 +115,10 @@ The workflow can also be launched manually from the GitHub Actions interface.
 
 ## Updating the website
 
-Edit `index.html`, `styles.css` or `app.js`, test the result locally, then push the change to `main`:
+Edit the React components or styles under `frontend/src`, test the result locally, then push the change to `main`:
 
 ```powershell
-git add index.html styles.css app.js
+git add frontend
 git commit -m "Update ORION website"
 git push
 ```
