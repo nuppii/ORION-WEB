@@ -239,6 +239,58 @@ body {
     box-shadow: 0 0 32px rgba(37, 150, 190, 0.2);
 }
 
+/* ============ TRON: Legacy touches ============ */
+
+/* Cut-corner clip (TRON panel style) */
+.tron-cut {
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+}
+.tron-cut-sm {
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+}
+.btn-primary-orion,
+.btn-ghost-orion {
+    clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+}
+
+/* Scanlines overlay */
+.scanlines {
+    position: relative;
+}
+.scanlines::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(0deg, rgba(72, 202, 228, 0.028) 0px, rgba(72, 202, 228, 0.028) 1px, transparent 1px, transparent 3px);
+}
+
+/* TRON perspective grid floor */
+.tron-grid-floor {
+    position: absolute;
+    left: -20%;
+    right: -20%;
+    bottom: -12%;
+    height: 44%;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(72, 202, 228, 0.14) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(72, 202, 228, 0.14) 1px, transparent 1px);
+    background-size: 48px 48px;
+    transform: perspective(520px) rotateX(62deg);
+    transform-origin: center top;
+    animation: tron-grid-move 3.2s linear infinite;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.85) 40%, transparent 100%);
+    mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.85) 40%, transparent 100%);
+}
+@keyframes tron-grid-move {
+    from { background-position: 0 0; }
+    to { background-position: 0 48px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .tron-grid-floor { animation: none; }
+}
+
 @layer base {
     [data-debug-wrapper="true"] {
         display: contents !important;

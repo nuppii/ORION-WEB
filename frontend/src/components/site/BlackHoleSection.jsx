@@ -4,7 +4,8 @@ import * as THREE from "three";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent, useReducedMotion, useInView } from "framer-motion";
 import { Magnetic } from "./Magnetic";
 import { scrollToId } from "./Navbar";
-import { FINAL_CTA } from "./content";
+import { useContent } from "./i18n";
+import { GITHUB_URL } from "./content";
 
 const clamp01 = (v) => Math.min(1, Math.max(0, v));
 
@@ -123,10 +124,10 @@ const Stars = () => {
   );
 };
 
-const CTAButtons = () => (
+const CTAButtons = ({ FINAL_CTA }) => (
   <div className="mt-10 flex flex-wrap justify-center gap-4 pointer-events-auto">
     <Magnetic>
-      <button data-testid="cta-follow-btn" className="btn-primary-orion" onClick={() => scrollToId("status")}>
+      <button data-testid="cta-follow-btn" className="btn-primary-orion" onClick={() => window.open(GITHUB_URL, "_blank", "noopener")}>
         {FINAL_CTA.actions[0].label}
       </button>
     </Magnetic>
@@ -144,6 +145,7 @@ const CTAButtons = () => (
 );
 
 export const BlackHoleSection = () => {
+  const { FINAL_CTA } = useContent();
   const containerRef = useRef(null);
   const reduced = useReducedMotion();
   const inView = useInView(containerRef, { margin: "600px 0px 600px 0px" });
@@ -169,13 +171,13 @@ export const BlackHoleSection = () => {
         </div>
         <h2 className="mt-10 font-heading font-bold text-5xl sm:text-7xl text-white">{FINAL_CTA.reveal}</h2>
         <p className="mt-4 font-mono-orion text-xs uppercase tracking-[0.25em] text-[#48cae4]">{FINAL_CTA.subtitle}</p>
-        <CTAButtons />
+        <CTAButtons FINAL_CTA={FINAL_CTA} />
       </section>
     );
   }
 
   return (
-    <section id="cta" data-testid="cta-section" ref={containerRef} className="relative h-[420vh]">
+    <section id="cta" data-testid="cta-section" ref={containerRef} className="relative h-[280vh]">
       <div className="sticky top-0 h-screen overflow-hidden">
         <div className="absolute inset-0">
           {inView && (
@@ -228,12 +230,12 @@ export const BlackHoleSection = () => {
                 className="text-center"
                 data-testid="cta-reveal"
               >
-                <p className="font-mono-orion text-[11px] tracking-[0.35em] uppercase text-[#48cae4]/80 mb-6">Beyond the event horizon</p>
+                <p className="font-mono-orion text-[11px] tracking-[0.35em] uppercase text-[#48cae4]/80 mb-6">{FINAL_CTA.horizon}</p>
                 <h2 className="font-heading font-bold text-6xl sm:text-8xl lg:text-9xl tracking-[-0.04em] text-white leading-none" style={{ textShadow: "0 0 80px rgba(72,202,228,0.35)" }}>
                   {FINAL_CTA.reveal}
                 </h2>
                 <p className="mt-6 font-mono-orion text-[11px] sm:text-xs tracking-[0.3em] uppercase text-[#cbd5e1]" style={{ textShadow: "0 2px 20px rgba(2,3,8,0.9), 0 0 8px rgba(2,3,8,0.9)" }}>{FINAL_CTA.subtitle}</p>
-                <CTAButtons />
+                <CTAButtons FINAL_CTA={FINAL_CTA} />
               </motion.div>
             )}
           </AnimatePresence>

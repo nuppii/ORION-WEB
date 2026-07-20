@@ -2,7 +2,7 @@ import { useRef, useMemo, useState, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent, useReducedMotion, useInView } from "framer-motion";
-import { SERVICES } from "./content";
+import { useContent } from "./i18n";
 
 const ORBITS = [2.3, 3.2, 4.1, 5.0, 5.9];
 const SIZES = [0.3, 0.24, 0.2, 0.22, 0.18];
@@ -46,7 +46,7 @@ const Planet = ({ index, activeRef, color }) => {
   );
 };
 
-const SolarScene = ({ activeRef, progressRef }) => {
+const SolarScene = ({ activeRef, progressRef, items }) => {
   const stars = useMemo(() => {
     const arr = new Float32Array(1600 * 3);
     for (let i = 0; i < 1600; i++) {
@@ -95,7 +95,7 @@ const SolarScene = ({ activeRef, progressRef }) => {
           <meshBasicMaterial color="#2596be" side={THREE.DoubleSide} transparent opacity={0.28} depthWrite={false} />
         </mesh>
       ))}
-      {SERVICES.items.map((s, i) => (
+      {items.map((s, i) => (
         <Planet key={s.name} index={i} activeRef={activeRef} color={s.color} />
       ))}
       <points>
@@ -109,6 +109,7 @@ const SolarScene = ({ activeRef, progressRef }) => {
 };
 
 export const SolarSection = () => {
+  const { SERVICES, UI } = useContent();
   const containerRef = useRef(null);
   const reduced = useReducedMotion();
   const inView = useInView(containerRef, { margin: "600px 0px 600px 0px" });
@@ -149,13 +150,13 @@ export const SolarSection = () => {
   const service = active >= 0 ? SERVICES.items[active] : null;
 
   return (
-    <section id="integrations" data-testid="integrations-section" ref={containerRef} className="relative h-[400vh]">
+    <section id="integrations" data-testid="integrations-section" ref={containerRef} className="relative h-[300vh]">
       <div className="sticky top-0 h-screen overflow-hidden">
         <div className="absolute inset-0">
           {inView && (
             <Suspense fallback={null}>
               <Canvas camera={{ position: [0, 4.6, 9.5], fov: 55 }} dpr={[1, 1.6]} gl={{ antialias: false, alpha: true }}>
-                <SolarScene activeRef={activeRef} progressRef={progressRef} />
+                <SolarScene activeRef={activeRef} progressRef={progressRef} items={SERVICES.items} />
               </Canvas>
             </Suspense>
           )}
@@ -197,7 +198,7 @@ export const SolarSection = () => {
                   data-testid="solar-intro"
                 >
                   <p className="text-base sm:text-lg text-[#94A3B8] leading-relaxed">{SERVICES.intro}</p>
-                  <p className="mt-4 font-mono-orion text-[10px] tracking-[0.3em] uppercase text-[#48cae4]/70 animate-pulse">Keep scrolling to visit each environment ↓</p>
+                  <p className="mt-4 font-mono-orion text-[10px] tracking-[0.3em] uppercase text-[#48cae4]/70 animate-pulse">{UI.keepScrollSolar}</p>
                 </motion.div>
               ) : (
                 <motion.div

@@ -5,9 +5,10 @@ import { ParticleSphere } from "./ParticleSphere";
 import { Magnetic } from "./Magnetic";
 import { LetterReveal } from "./SplitReveal";
 import { scrollToId } from "./Navbar";
-import { HERO } from "./content";
+import { useContent } from "./i18n";
 
 export const Hero = ({ started }) => {
+  const { HERO, UI } = useContent();
   const ref = useRef(null);
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
@@ -22,6 +23,9 @@ export const Hero = ({ started }) => {
       <div className="aura" style={{ width: 700, height: 700, background: "rgba(37,150,190,0.14)", top: "-15%", right: "-10%" }} />
       <div className="aura" style={{ width: 500, height: 500, background: "rgba(72,202,228,0.07)", bottom: "-20%", left: "-10%" }} />
 
+      {/* TRON grid floor */}
+      <div className="tron-grid-floor" aria-hidden />
+
       <motion.div style={{ y: ySphere }} className="absolute inset-0">
         <ParticleSphere />
       </motion.div>
@@ -34,12 +38,12 @@ export const Hero = ({ started }) => {
           className="font-mono-orion text-xs sm:text-sm tracking-[0.35em] uppercase text-[#48cae4] mb-6 flex items-center gap-3"
           data-testid="hero-eyebrow"
         >
-          <span className="h-px w-10 inline-block" style={{ background: "var(--orion-cyan)" }} />
+          <span className="h-px w-10 inline-block" style={{ background: "var(--orion-cyan)", boxShadow: "0 0 8px var(--orion-cyan)" }} />
           {HERO.eyebrow}
         </motion.p>
 
         {started && (
-          <h1 data-testid="hero-title" className="font-heading font-bold text-white text-[22vw] sm:text-[18vw] lg:text-[15vw] leading-[0.85] tracking-[-0.05em] select-none">
+          <h1 data-testid="hero-title" className="font-heading font-bold text-white text-[22vw] sm:text-[18vw] lg:text-[15vw] leading-[0.85] tracking-[-0.05em] select-none" style={{ textShadow: "0 0 90px rgba(72,202,228,0.25)" }}>
             <LetterReveal text="ORION" delay={d + 0.15} />
           </h1>
         )}
@@ -106,7 +110,7 @@ export const Hero = ({ started }) => {
         <motion.span animate={reduced ? {} : { y: [0, 6, 0] }} transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}>
           <ArrowDown size={14} />
         </motion.span>
-        Scroll to explore
+        {UI.scrollExplore}
       </motion.button>
     </section>
   );

@@ -3,8 +3,10 @@ import "@/App.css";
 import Lenis from "lenis";
 import { AnimatePresence } from "framer-motion";
 import { Toaster } from "sonner";
+import { LangProvider } from "@/components/site/i18n";
 import { Preloader } from "@/components/site/Preloader";
 import { CustomCursor } from "@/components/site/CustomCursor";
+import { CosmicBackground } from "@/components/site/CosmicBackground";
 import { Navbar } from "@/components/site/Navbar";
 import { Hero } from "@/components/site/Hero";
 import { Vision } from "@/components/site/Vision";
@@ -56,31 +58,34 @@ function App() {
   }, []);
 
   return (
-    <div className="App relative">
-      <div className="noise-overlay" />
-      <CustomCursor />
-      <Toaster position="bottom-right" theme="dark" toastOptions={{ style: { background: "#060a14", border: "1px solid rgba(37,150,190,0.35)", color: "#f8fafc" } }} />
-      <AnimatePresence mode="wait">{loading && <Preloader key="preloader" />}</AnimatePresence>
-      <Navbar />
-      <main>
-        <Hero started={!loading} />
-        <Vision />
-        <About />
-        <Capabilities />
-        <GalaxySection />
-        <HowItWorks />
-        <SolarSection />
-        <Finance />
-        <Security />
-        <TechStack />
-        <StatusSection />
-        <RoadmapSection />
-        <FAQSection />
-        <BlackHoleSection />
-        <DisclaimerSection />
-      </main>
-      <Footer />
-    </div>
+    <LangProvider>
+      <div className="App relative">
+        <div className="noise-overlay" />
+        <CosmicBackground />
+        <CustomCursor />
+        <Toaster position="bottom-right" theme="dark" toastOptions={{ style: { background: "#060a14", border: "1px solid rgba(37,150,190,0.35)", color: "#f8fafc" } }} />
+        <AnimatePresence mode="wait">{loading && <Preloader key="preloader" />}</AnimatePresence>
+        <Navbar />
+        <main className="relative">
+          <Hero started={!loading} />
+          <Vision />
+          <About />
+          <Capabilities />
+          <GalaxySection />
+          <HowItWorks />
+          <SolarSection />
+          <Finance />
+          <Security />
+          <TechStack />
+          <StatusSection />
+          <RoadmapSection />
+          <FAQSection />
+          <BlackHoleSection />
+          <DisclaimerSection />
+        </main>
+        <Footer />
+      </div>
+    </LangProvider>
   );
 }
 

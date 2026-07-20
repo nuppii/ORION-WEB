@@ -2,7 +2,7 @@ import { useRef, useMemo, useState, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent, useReducedMotion, useInView } from "framer-motion";
-import { ARCHITECTURE } from "./content";
+import { useContent } from "./i18n";
 import { FadeUp } from "./SplitReveal";
 
 const smoothstep = (t) => t * t * (3 - 2 * t);
@@ -88,16 +88,16 @@ const GalaxyPoints = ({ progressRef }) => {
   );
 };
 
-const LayerTicks = ({ active }) => (
+const LayerTicks = ({ active, layers }) => (
   <div className="hidden md:flex flex-col gap-2 items-end" data-testid="galaxy-layer-ticks">
-    {ARCHITECTURE.layers.map((l, i) => (
-      <button key={l.name} className="group flex items-center gap-3" data-hover>
+    {layers.map((l, i) => (
+      <button key={l.short} className="group flex items-center gap-3" data-hover>
         <span
           className={`font-mono-orion text-[9px] tracking-[0.2em] uppercase transition-all duration-500 ${
             i === active ? "text-[#48cae4] opacity-100" : "text-[#94A3B8] opacity-40"
           }`}
         >
-          {l.name.replace(" Layer", "")}
+          {l.short}
         </span>
         <span
           className={`h-px transition-all duration-500 ${i === active ? "w-10 bg-[#48cae4]" : "w-4 bg-white/20"}`}
@@ -109,6 +109,7 @@ const LayerTicks = ({ active }) => (
 );
 
 export const GalaxySection = () => {
+  const { ARCHITECTURE, UI } = useContent();
   const containerRef = useRef(null);
   const reduced = useReducedMotion();
   const inView = useInView(containerRef, { margin: "600px 0px 600px 0px" });
@@ -131,9 +132,9 @@ export const GalaxySection = () => {
           <p className="text-[#94A3B8] max-w-2xl mb-16">{ARCHITECTURE.intro}</p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.06]">
             {ARCHITECTURE.layers.map((l, i) => (
-              <div key={l.name} className="bg-[#020308] p-8">
+              <div key={l.short} className="bg-[#020308] p-8">
                 <span className="font-mono-orion text-[10px] text-[#48cae4]/70">{String(i + 1).padStart(2, "0")}</span>
-                <p className="mt-3 font-heading font-bold text-lg text-white">{l.name}</p>
+                <p className="mt-3 font-heading font-bold text-lg text-white">{l.nameMain}{l.nameAccent}</p>
                 <p className="mt-2 text-sm text-[#94A3B8]">{l.text}</p>
               </div>
             ))}
@@ -146,7 +147,7 @@ export const GalaxySection = () => {
   const activeLayer = phase > 0 ? ARCHITECTURE.layers[phase - 1] : null;
 
   return (
-    <section id="architecture" data-testid="architecture-section" ref={containerRef} className="relative h-[420vh]">
+    <section id="architecture" data-testid="architecture-section" ref={containerRef} className="relative h-[300vh]">
       <div className="sticky top-0 h-screen overflow-hidden">
         {/* 3D galaxy */}
         <div className="absolute inset-0">
@@ -172,7 +173,7 @@ export const GalaxySection = () => {
               </h2>
             </div>
             <div className="pt-2 pointer-events-auto">
-              <LayerTicks active={phase - 1} />
+              <LayerTicks active={phase - 1} layers={ARCHITECTURE.layers} />
             </div>
           </div>
 
@@ -189,11 +190,11 @@ export const GalaxySection = () => {
                   data-testid="galaxy-intro"
                 >
                   <p className="text-base sm:text-lg text-[#94A3B8] leading-relaxed">{ARCHITECTURE.intro}</p>
-                  <p className="mt-4 font-mono-orion text-[10px] tracking-[0.3em] uppercase text-[#48cae4]/70 animate-pulse">Keep scrolling to traverse the network ↓</p>
+                  <p className="mt-4 font-mono-orion text-[10px] tracking-[0.3em] uppercase text-[#48cae4]/70 animate-pulse">{UI.keepScrollArch}</p>
                 </motion.div>
               ) : (
                 <motion.div
-                  key={activeLayer.name}
+                  key={activeLayer.short}
                   initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
                   animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                   exit={{ opacity: 0, y: -30, filter: "blur(8px)" }}
@@ -208,8 +209,8 @@ export const GalaxySection = () => {
                     <span className="h-px flex-1 max-w-[80px] bg-[rgba(72,202,228,0.4)]" />
                   </div>
                   <p className="mt-3 font-heading font-bold text-3xl sm:text-5xl tracking-tight text-white">
-                    {activeLayer.name.replace(" Layer", "")}
-                    <span className="text-[#48cae4]"> Layer</span>
+                    {activeLayer.nameMain}
+                    <span className="text-[#48cae4]" style={{ textShadow: "0 0 24px rgba(72,202,228,0.5)" }}>{activeLayer.nameAccent}</span>
                   </p>
                   <p className="mt-4 text-sm sm:text-base text-[#cbd5e1] leading-relaxed max-w-xl">{activeLayer.text}</p>
                   {/* progress bar */}
