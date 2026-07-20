@@ -7,11 +7,20 @@ import { Preloader } from "@/components/site/Preloader";
 import { CustomCursor } from "@/components/site/CustomCursor";
 import { Navbar } from "@/components/site/Navbar";
 import { Hero } from "@/components/site/Hero";
+import { Vision } from "@/components/site/Vision";
 import { About } from "@/components/site/About";
-import { Features } from "@/components/site/Features";
+import { Capabilities } from "@/components/site/Capabilities";
+import { GalaxySection } from "@/components/site/GalaxySection";
 import { HowItWorks } from "@/components/site/HowItWorks";
+import { SolarSection } from "@/components/site/SolarSection";
+import { Finance } from "@/components/site/Finance";
+import { Security } from "@/components/site/Security";
 import { TechStack } from "@/components/site/TechStack";
-import { Contact } from "@/components/site/Contact";
+import { StatusSection } from "@/components/site/StatusSection";
+import { RoadmapSection } from "@/components/site/RoadmapSection";
+import { FAQSection } from "@/components/site/FAQSection";
+import { BlackHoleSection } from "@/components/site/BlackHoleSection";
+import { DisclaimerSection } from "@/components/site/DisclaimerSection";
 import { Footer } from "@/components/site/Footer";
 
 function App() {
@@ -55,11 +64,20 @@ function App() {
       <Navbar />
       <main>
         <Hero started={!loading} />
+        <Vision />
         <About />
-        <Features />
+        <Capabilities />
+        <GalaxySection />
         <HowItWorks />
+        <SolarSection />
+        <Finance />
+        <Security />
         <TechStack />
-        <Contact />
+        <StatusSection />
+        <RoadmapSection />
+        <FAQSection />
+        <BlackHoleSection />
+        <DisclaimerSection />
       </main>
       <Footer />
     </div>

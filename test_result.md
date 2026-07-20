@@ -101,3 +101,88 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+user_problem_statement: >
+  Refonte complète du contenu du site ORION (nouveau texte EN fourni par l'utilisateur : Hero, Vision,
+  About + Core Principles, 9 Capabilities, Architecture (9 couches), How It Works (10 étapes),
+  Connected Services, ORION Finance, Privacy & Security, Tech Stack, Development Status + Limitations,
+  Roadmap (6 phases), FAQ (10), Final CTA, Disclaimer, Footer © 2026 Rochat's Enterprise).
+  Style lusion.co conservé. 3 sections 3D immersives épinglées au scroll avec informations intégrées :
+  Galaxie (Architecture), Système solaire (Connected Services), Trou noir (Final CTA).
+  Pas de formulaire de contact (structure comme la branche main). Frontend uniquement, aucun changement backend.
+
+frontend:
+  - task: "Full content replacement + new sections (Vision, Capabilities accordion, Finance, Security, Status, Roadmap, FAQ, Disclaimer, Footer)"
+    implemented: true
+    working: true
+    file: "frontend/src/components/site/*.jsx, content.js, App.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "All sections rewritten from content.js single source. Verified visually via screenshots."
+  - task: "3D Galaxy scroll section (Architecture layers HUD)"
+    implemented: true
+    working: true
+    file: "frontend/src/components/site/GalaxySection.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Pinned 420vh section, particle spiral galaxy forms on scroll, 9 layer cards cycle with progress. Screenshot verified."
+  - task: "3D Solar System scroll section (Connected Services planets)"
+    implemented: true
+    working: true
+    file: "frontend/src/components/site/SolarSection.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Pinned 400vh section, sun + 5 orbiting planets (1 per service), active planet highlighted + HUD card. Screenshot verified."
+  - task: "3D Black Hole scroll section (Final CTA)"
+    implemented: true
+    working: true
+    file: "frontend/src/components/site/BlackHoleSection.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Pinned 420vh section, accretion disk particles + event horizon + photon rings, CTA lines pulled into black hole, final reveal 'This is ORION.' with 3 buttons. Camera tuned after first screenshot."
+  - task: "Navbar with 9 links + mobile fullscreen menu + scroll progress bar"
+    implemented: true
+    working: true
+    file: "frontend/src/components/site/Navbar.jsx"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Desktop links at xl+, hamburger overlay menu below, Discover ORION CTA. Mobile menu NOT yet tested."
+
+metadata:
+  created_by: "main_agent"
+  version: "1.0"
+  test_sequence: 1
+  run_ui: false
+
+test_plan:
+  current_focus:
+    - "3D scroll sections behavior during real (smooth) scrolling"
+    - "Capabilities/FAQ accordions"
+    - "Navigation anchors (navbar, hero buttons, CTA buttons, footer links)"
+    - "Mobile menu"
+  stuck_tasks: []
+  test_all: false
+  test_priority: "high_first"
+
+agent_communication:
+  - agent: "main"
+    message: "Frontend-only rewrite complete. No backend changes (backend untouched, no backend testing needed). Visual verification done via screenshots at multiple scroll positions. Awaiting user permission for automated frontend testing."

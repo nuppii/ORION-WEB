@@ -1,84 +1,55 @@
 import { useRef } from "react";
-import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
-import { MessageSquare, BrainCircuit, Wrench, Play, RefreshCw } from "lucide-react";
+import { motion, useScroll, useSpring, useReducedMotion } from "framer-motion";
 import { FadeUp } from "./SplitReveal";
-
-const STEPS = [
-  { icon: MessageSquare, title: "User Input", desc: "Intent enters the network — a request, a trigger, a signal." },
-  { icon: BrainCircuit, title: "AI Analysis", desc: "ORION reasons over context and decomposes the objective." },
-  { icon: Wrench, title: "Tool Selection", desc: "The right operational path and tools are selected automatically." },
-  { icon: Play, title: "Execution", desc: "Coordinated actions run across scripts, APIs and systems." },
-  { icon: RefreshCw, title: "Feedback", desc: "Results flow back with clear state, ready for the next cycle." },
-];
+import { HOW_IT_WORKS } from "./content";
 
 export const HowItWorks = () => {
   const ref = useRef(null);
   const reduced = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const x = useTransform(scrollYProgress, [0.05, 0.95], ["2%", "-62%"]);
-  const lineW = useTransform(scrollYProgress, [0.05, 0.95], ["0%", "100%"]);
-
-  if (reduced) {
-    return (
-      <section id="how-it-works" data-testid="how-it-works-section" className="py-32 px-6 sm:px-12">
-        <div className="max-w-6xl mx-auto">
-          <p className="font-mono-orion text-xs tracking-[0.3em] uppercase text-[#48cae4] mb-4">03 — How It Works</p>
-          <h2 className="font-heading font-bold text-4xl sm:text-5xl text-white mb-16">From request to completed action.</h2>
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {STEPS.map((s, i) => (
-              <div key={s.title} className="border border-white/[0.08] p-8">
-                <s.icon size={22} className="text-[#48cae4]" />
-                <h3 className="font-heading font-bold text-xl text-white mt-4">{s.title}</h3>
-                <p className="text-sm text-[#94A3B8] mt-2">{s.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.7", "end 0.75"] });
+  const lineScale = useSpring(scrollYProgress, { stiffness: 90, damping: 25 });
 
   return (
-    <section ref={ref} id="how-it-works" data-testid="how-it-works-section" className="relative h-[380vh]">
-      <div className="sticky top-0 h-screen overflow-hidden flex flex-col justify-center">
-        <div className="aura" style={{ width: 700, height: 700, background: "rgba(37,150,190,0.09)", top: "30%", right: "-20%" }} />
-        <div className="px-6 sm:px-12 max-w-6xl mx-auto w-full">
-          <FadeUp>
-            <p className="font-mono-orion text-xs tracking-[0.3em] uppercase text-[#48cae4] mb-4 flex items-center gap-3">
-              <span className="text-[#94A3B8]/40">03</span> How It Works
-            </p>
-          </FadeUp>
-          <FadeUp delay={0.1}>
-            <h2 data-testid="how-it-works-title" className="font-heading font-bold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-none text-white">
-              From request to completed action.
-            </h2>
-          </FadeUp>
-        </div>
+    <section id="how-it-works" data-testid="how-it-works-section" className="relative py-32 sm:py-44 px-6 sm:px-12 overflow-hidden">
+      <div className="aura" style={{ width: 600, height: 600, background: "rgba(37,150,190,0.07)", top: "40%", right: "-18%" }} />
+      <div className="max-w-6xl mx-auto">
+        <FadeUp>
+          <p className="font-mono-orion text-xs tracking-[0.3em] uppercase text-[#48cae4] mb-4 flex items-center gap-3">
+            <span className="text-[#94A3B8]/40">05</span> {HOW_IT_WORKS.eyebrow}
+          </p>
+        </FadeUp>
+        <FadeUp delay={0.1}>
+          <h2 data-testid="how-it-works-title" className="font-heading font-bold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.02] text-white max-w-3xl mb-24">
+            {HOW_IT_WORKS.title}
+          </h2>
+        </FadeUp>
 
-        <div className="mt-16 sm:mt-20 relative">
-          <div className="absolute top-1/2 left-0 right-0 h-px bg-white/[0.06]" />
-          <motion.div className="absolute top-1/2 left-0 h-px" style={{ width: lineW, background: "linear-gradient(90deg, var(--orion-blue), var(--orion-cyan))", boxShadow: "0 0 16px rgba(37,150,190,0.6)" }} />
-          <motion.div style={{ x }} className="flex gap-6 sm:gap-10 pl-6 sm:pl-12 w-max">
-            {STEPS.map((s, i) => (
-              <div
-                key={s.title}
-                data-testid={`step-card-${i}`}
-                className="relative w-[280px] sm:w-[360px] shrink-0 border border-white/[0.08] bg-[#060a14]/80 backdrop-blur-xl p-8 sm:p-10 group hover:border-[rgba(37,150,190,0.5)] transition-colors duration-500"
-                data-hover
-              >
-                <span className="font-heading font-bold text-6xl sm:text-7xl text-outline-blue absolute top-6 right-6 opacity-60">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <s.icon size={26} className="text-[#48cae4]" />
-                <h3 className="font-heading font-bold text-2xl text-white mt-8 tracking-tight">{s.title}</h3>
-                <p className="text-sm text-[#94A3B8] leading-relaxed mt-3">{s.desc}</p>
-                <div className="mt-8 h-px w-full bg-white/[0.06] group-hover:bg-[rgba(37,150,190,0.4)] transition-colors duration-500" />
-                <p className="font-mono-orion text-[10px] tracking-[0.25em] uppercase text-[#94A3B8]/50 mt-4">
-                  Phase {i + 1} / 5
-                </p>
-              </div>
+        <div ref={ref} className="relative">
+          {/* animated spine */}
+          <div className="absolute left-[19px] sm:left-[27px] top-0 bottom-0 w-px bg-white/[0.08]" />
+          {!reduced && (
+            <motion.div
+              className="absolute left-[19px] sm:left-[27px] top-0 bottom-0 w-px origin-top"
+              style={{ scaleY: lineScale, background: "linear-gradient(180deg, #48cae4, #2596be)", boxShadow: "0 0 12px rgba(72,202,228,0.5)" }}
+            />
+          )}
+
+          <div className="space-y-14 sm:space-y-20">
+            {HOW_IT_WORKS.steps.map((s, i) => (
+              <FadeUp key={s.title} y={40} delay={0.05}>
+                <div data-testid={`how-step-${i}`} className="group relative grid grid-cols-[40px_1fr] sm:grid-cols-[56px_180px_1fr] gap-6 sm:gap-10 items-start" data-hover>
+                  <div className="relative z-10 flex items-center justify-center w-10 h-10 sm:w-14 sm:h-14 border border-white/[0.12] bg-[#020308] group-hover:border-[rgba(72,202,228,0.6)] group-hover:shadow-[0_0_24px_rgba(72,202,228,0.25)] transition-all duration-500">
+                    <span className="font-mono-orion text-xs sm:text-sm text-[#48cae4]">{String(i + 1).padStart(2, "0")}</span>
+                  </div>
+                  <p className="hidden sm:block font-heading font-bold text-xl text-white pt-3 group-hover:text-[#48cae4] transition-colors duration-300">{s.title}</p>
+                  <div className="pt-1 sm:pt-3">
+                    <p className="sm:hidden font-heading font-bold text-lg text-white mb-2">{s.title}</p>
+                    <p className="text-sm sm:text-base text-[#94A3B8] leading-relaxed max-w-2xl group-hover:text-[#cbd5e1] transition-colors duration-300">{s.text}</p>
+                  </div>
+                </div>
+              </FadeUp>
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
