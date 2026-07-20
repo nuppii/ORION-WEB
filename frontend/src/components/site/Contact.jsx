@@ -5,7 +5,8 @@ import { Loader2, Send, CheckCircle2 } from "lucide-react";
 import { FadeUp, LineReveal } from "./SplitReveal";
 import { Magnetic } from "./Magnetic";
 
-const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL?.replace(/\/$/, "");
+const API = BACKEND_URL ? `${BACKEND_URL}/api` : null;
 
 export const Contact = () => {
   const [form, setForm] = useState({ name: "", email: "", company: "", message: "" });
@@ -16,6 +17,10 @@ export const Contact = () => {
 
   const submit = async (e) => {
     e.preventDefault();
+    if (!API) {
+      toast.info("The ORION waitlist is not open yet. Please check back soon.");
+      return;
+    }
     if (!form.name.trim() || !form.email.trim()) {
       toast.error("Name and email are required.");
       return;
