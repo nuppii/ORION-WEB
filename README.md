@@ -14,6 +14,20 @@
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-0078D4?style=for-the-badge)](#requirements)
 [![Commercial](https://img.shields.io/badge/commercial%20readiness-not%20ready-991b1b?style=for-the-badge)](#project-status)
 
+<div align="center">
+
+## Explore ORION online
+
+**Discover the official ORION website, its vision, capabilities and evolving ecosystem.**
+
+[![Open the ORION website](https://img.shields.io/badge/OPEN_THE_ORION_WEBSITE-176BFF?style=for-the-badge&logo=googlechrome&logoColor=white)](https://nuppii.github.io/ORION-WEB/)
+
+### [nuppii.github.io/ORION-WEB](https://nuppii.github.io/ORION-WEB/)
+
+</div>
+
+---
+
 > [!IMPORTANT]
 > **ORION is an experimental project under active development. It is not production-ready and is not yet ready for commercialization.** Features, interfaces, installation steps and internal architecture may change without notice. Do not rely on ORION for critical, sensitive or irreversible operations.
 
